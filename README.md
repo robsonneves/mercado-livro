@@ -6,3 +6,4 @@
 
 # Spring
 - Spring-web
+- Spring-data
