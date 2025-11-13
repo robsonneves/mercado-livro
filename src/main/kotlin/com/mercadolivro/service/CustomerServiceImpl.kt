@@ -1,7 +1,5 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.model.CustomerModel
 import org.springframework.stereotype.Service
 
@@ -15,23 +13,24 @@ class CustomerServiceImpl : CustomerService {
         return customers
     }
 
-    override fun create(customer: PostCustomerRequest){
-        val id = if(customers.isEmpty()) { 1 } else { customers.last().id.toInt() + 1 }.toString()
-        customers.add(CustomerModel(id, customer.name, customer.email))
+    override fun create(customer: CustomerModel){
+        val id = if(customers.isEmpty()) { 1 } else { customers.last().id!!.toInt() + 1 }.toString()
+        customer.id = id
+        customers.add(customer)
     }
 
     override fun getCustomer(id: String): CustomerModel{
-        return customers.first { it.id == id }
+        return customers.first { it.id.equals(id) }
     }
 
-    override fun update(id: String, customer: PutCustomerRequest){
-        customers.find{ it.id == id }?.let{
+    override fun update(customer: CustomerModel){
+        customers.find{ it.id.equals(customer.id) }?.let{
             it.name = customer.name
             it.email = customer.email
         }
     }
 
     override fun delete(id: String){
-        customers.removeIf{ it.id == id }
+        customers.removeIf{ it.id.equals(id) }
     }
 }

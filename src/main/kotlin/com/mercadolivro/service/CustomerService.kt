@@ -1,14 +1,12 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.model.CustomerModel
 
 interface CustomerService {
 
     fun getAll(name: String?): List<CustomerModel>
-    fun create(customer: PostCustomerRequest)
+    fun create(customer: CustomerModel)
     fun getCustomer(id: String): CustomerModel
-    fun update(id: String, customer: PutCustomerRequest)
+    fun update(customer: CustomerModel)
     fun delete(id: String)
 }
