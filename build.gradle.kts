@@ -4,8 +4,8 @@ plugins {
 	kotlin("plugin.jpa") version "1.4.30"
 	id("org.springframework.boot") version "3.5.7"
 	id("io.spring.dependency-management") version "1.1.7"
-	id ("org.graalvm.buildtools.native") version "0.9.28"
-
+	id("org.graalvm.buildtools.native") version "0.9.28"
+	id("org.flywaydb.flyway") version "10.18.2"
 }
 
 group = "com.mercadolivro"
@@ -27,7 +27,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	runtimeOnly("com.mysql:mysql-connector-j")
+
+	// Driver MySQL 8.4+
+	implementation("com.mysql:mysql-connector-j:8.1.0")
+	// Flyway compatível com Spring Boot 3.5
+	//implementation("org.flywaydb:flyway-core:10.10.0")
+	//runtimeOnly("mysql:mysql-connector-java")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")

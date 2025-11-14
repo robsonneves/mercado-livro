@@ -19,7 +19,7 @@ class CustomerServiceImpl(
         customerRepository.save(customer)
     }
 
-    override fun getCustomer(id: Int): CustomerModel{
+    override fun getById(id: Int): CustomerModel{
         return customerRepository.findById(id).orElseThrow()
     }
 

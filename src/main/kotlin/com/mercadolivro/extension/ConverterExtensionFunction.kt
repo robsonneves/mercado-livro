@@ -1,7 +1,11 @@
 package com.mercadolivro.extension
 
+import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PostCustomerRequest
+import com.mercadolivro.controller.request.PutBookRequest
 import com.mercadolivro.controller.request.PutCustomerRequest
+import com.mercadolivro.enums.StatusEnum
+import com.mercadolivro.model.BookModel
 import com.mercadolivro.model.CustomerModel
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel{
@@ -10,4 +14,18 @@ fun PostCustomerRequest.toCustomerModel(): CustomerModel{
 
 fun PutCustomerRequest.toCustomerModel(id: Int): CustomerModel{
     return CustomerModel(id = id, name = this.name, email = this.email)
+}
+
+fun PostBookRequest.toBookModel(customerModel: CustomerModel): BookModel{
+    return BookModel(name = this.name, price = this.price, status = StatusEnum.ATIVO, customer = customerModel)
+}
+
+fun PutBookRequest.toBookModel(bookPrevious: BookModel): BookModel{
+    return BookModel(
+        id = bookPrevious.id,
+        name = this.name ?: bookPrevious.name,
+        price = this.price ?: bookPrevious.price,
+        status = bookPrevious.status,
+        customer = bookPrevious.customer
+    )
 }

@@ -3,6 +3,7 @@
 - Kotlin
 - Gradle
 - Spring-boot 3.5.7
+- Flaywaydb
 
 # Spring
 - Spring-web
