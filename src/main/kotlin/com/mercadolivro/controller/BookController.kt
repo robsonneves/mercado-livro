@@ -2,9 +2,10 @@ package com.mercadolivro.controller
 
 import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PutBookRequest
+import com.mercadolivro.controller.response.BookResponse
 import com.mercadolivro.enums.BookStatusEnum
 import com.mercadolivro.extension.toBookModel
-import com.mercadolivro.model.BookModel
+import com.mercadolivro.extension.toResponse
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.service.BookServiceImpl
 import com.mercadolivro.service.CustomerService
@@ -19,8 +20,8 @@ class BookController(
 ) {
 
     @GetMapping
-    fun findAll(@RequestParam name: String?): List<BookModel>{
-        return bookServiceImpl.findAll(name)
+    fun findAll(@RequestParam name: String?): List<BookResponse>{
+        return bookServiceImpl.findAll(name).map { it.toResponse() }
     }
 
     @PostMapping
@@ -32,8 +33,8 @@ class BookController(
     }
 
     @GetMapping("/{id}")
-    fun getBook(@PathVariable id: Int): BookModel{
-        return bookServiceImpl.findById(id)
+    fun getBook(@PathVariable id: Int): BookResponse{
+        return bookServiceImpl.findById(id).toResponse()
     }
 
     @PutMapping("/{id}")
@@ -48,14 +49,14 @@ class BookController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Int){
 
-        var book = bookServiceImpl.findById(id)
+        val book = bookServiceImpl.findById(id)
         book.status = BookStatusEnum.CANCELADO
         bookServiceImpl.save(book)
     }
 
     @GetMapping("/active")
-    fun findActives(): List<BookModel>{
-        return bookServiceImpl.findByStatus(BookStatusEnum.ATIVO)
+    fun findActives(): List<BookResponse>{
+        return bookServiceImpl.findByStatus(BookStatusEnum.ATIVO).map { it.toResponse() }
     }
 
     private fun getCustomer(idCustomer: Int): CustomerModel {
