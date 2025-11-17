@@ -2,7 +2,7 @@ package com.mercadolivro.controller
 
 import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PutBookRequest
-import com.mercadolivro.enums.StatusEnum
+import com.mercadolivro.enums.BookStatusEnum
 import com.mercadolivro.extension.toBookModel
 import com.mercadolivro.model.BookModel
 import com.mercadolivro.model.CustomerModel
@@ -49,16 +49,16 @@ class BookController(
     fun delete(@PathVariable id: Int){
 
         var book = bookServiceImpl.findById(id)
-        book.status = StatusEnum.CANCELADO
+        book.status = BookStatusEnum.CANCELADO
         bookServiceImpl.save(book)
     }
 
     @GetMapping("/active")
     fun findActives(): List<BookModel>{
-        return bookServiceImpl.findByStatus(StatusEnum.ATIVO)
+        return bookServiceImpl.findByStatus(BookStatusEnum.ATIVO)
     }
 
     private fun getCustomer(idCustomer: Int): CustomerModel {
-        return customerService.getById(idCustomer)
+        return customerService.findById(idCustomer)
     }
 }

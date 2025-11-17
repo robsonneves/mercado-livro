@@ -4,20 +4,21 @@ import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PostCustomerRequest
 import com.mercadolivro.controller.request.PutBookRequest
 import com.mercadolivro.controller.request.PutCustomerRequest
-import com.mercadolivro.enums.StatusEnum
+import com.mercadolivro.enums.CustomerStatusEnum
+import com.mercadolivro.enums.BookStatusEnum
 import com.mercadolivro.model.BookModel
 import com.mercadolivro.model.CustomerModel
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel{
-    return CustomerModel(name = this.name, email = this.email)
+    return CustomerModel(name = this.name, email = this.email, status = CustomerStatusEnum.ATIVO)
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): CustomerModel{
-    return CustomerModel(id = id, name = this.name, email = this.email)
+fun PutCustomerRequest.toCustomerModel(customePrevius: CustomerModel): CustomerModel{
+    return CustomerModel(id = customePrevius.id, name = this.name, email = this.email, status = customePrevius.status)
 }
 
 fun PostBookRequest.toBookModel(customerModel: CustomerModel): BookModel{
-    return BookModel(name = this.name, price = this.price, status = StatusEnum.ATIVO, customer = customerModel)
+    return BookModel(name = this.name, price = this.price, status = BookStatusEnum.ATIVO, customer = customerModel)
 }
 
 fun PutBookRequest.toBookModel(bookPrevious: BookModel): BookModel{

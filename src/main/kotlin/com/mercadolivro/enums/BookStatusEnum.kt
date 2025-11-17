@@ -1,6 +1,6 @@
 package com.mercadolivro.enums
 
-enum class StatusEnum {
+enum class BookStatusEnum {
     ATIVO,
     VENDIDO,
     CANCELADO,

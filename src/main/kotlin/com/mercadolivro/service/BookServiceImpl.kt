@@ -1,7 +1,8 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.enums.StatusEnum
+import com.mercadolivro.enums.BookStatusEnum
 import com.mercadolivro.model.BookModel
+import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.BookRepository
 import org.springframework.stereotype.Service
 
@@ -18,7 +19,15 @@ class BookServiceImpl(
         return bookRepository.findAll().toList()
     }
 
-    fun findByStatus(active: StatusEnum): List<BookModel> {
+    fun findByStatus(active: BookStatusEnum): List<BookModel> {
         return bookRepository.findByStatus(active)
+    }
+
+    fun deleteByCustomer(customer: CustomerModel) {
+        val books = bookRepository.findByCustomer(customer)
+        for(book in books){
+            book.status = BookStatusEnum.DELETADO
+        }
+        bookRepository.saveAll(books)
     }
 }
