@@ -41,4 +41,8 @@ class CustomerServiceImpl(
         customer.status = CustomerStatusEnum.INATIVO
         customerRepository.save(customer)
     }
+
+    fun emailAvailable(email: String): Boolean {
+        return !customerRepository.existsByEmail(email)
+    }
 }
