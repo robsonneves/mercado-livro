@@ -6,4 +6,5 @@ interface BookService{
 
     fun findAll(name: String?): List<BookModel>
     fun save(toBookModel: BookModel)
+    fun findAllByIds(bookIds: Set<Int>): List<BookModel>
 }
